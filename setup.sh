@@ -1,10 +1,10 @@
 #!/bin/zsh
+set -o pipefail
 
 destination=nix-darwin
-experiments="--extra-experimental-features 'nix-command flakes'"
 
 # fetch config
-nix $experiments flake clone github:the-evergive-project/nix-darwin --dest $destination
+nix flake clone --extra-experimental-features "nix-command flakes" github:the-evergive-project/nix-darwin --dest $destination
 cd $destination
 
 # fill in user-specific info
@@ -12,6 +12,9 @@ read "display_name?Enter display name (eg. John Doe): "
 read "email?Enter email (eg. j.doe@evergive.com): "
 sed -i '' "s/{display_name}/$display_name/g" flake.nix
 sed -i '' "s/{username}/$(whoami)/g" flake.nix
+
+set -o pipefail
+read "email?Enter email (eg. j.doe@evergive.com): "
 
 # setup ssh/age key
 private_key="$HOME/.ssh/id_ed25519"
@@ -27,8 +30,9 @@ fi
 
 if [[ ! -f $age_key ]]; then
   echo "generating age key..."
-  nix $experiments run nixpkgs#ssh-to-age < "$public_key" -o "$age_key"
-  age_pub="$(nix run nixpkgs#ssh-to-age < "$public_key")"
+  mkdir -p $HOME/.config/sops/age/
+  nix run --extra-experimental-features "nix-command flakes" nixpkgs#ssh-to-age -- < "$public_key" -o "$age_key"
+  age_pub="$(nix run --extra-experimental-features 'nix-command flakes' nixpkgs#ssh-to-age < "$public_key")"
   echo "share your key with the team: $age_pub"
 else
   echo "age key already exists"
@@ -37,4 +41,4 @@ fi
 echo "success"
 
 # build the config
-sudo nix $experiments run nix-darwin/master#darwin-rebuild -- switch --flake .#evergive
+sudo nix run --extra-experimental-features "nix-command flakes" nix-darwin/master#darwin-rebuild -- switch --flake .#evergive
