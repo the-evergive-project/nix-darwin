@@ -4,7 +4,7 @@ destination=nix-darwin
 experiments="--extra-experimental-features 'nix-command flakes'"
 
 # fetch config
-nix flake clone github:the-evergive-project/nix-darwin --dest $destination
+nix $experiments flake clone github:the-evergive-project/nix-darwin --dest $destination
 cd $destination
 
 # fill in user-specific info
