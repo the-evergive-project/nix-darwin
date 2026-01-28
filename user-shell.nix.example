@@ -1,0 +1,26 @@
+# Personal shell customizations - this file is gitignored
+#
+# Setup:
+#   cp user-shell.nix.example user-shell.nix
+#
+# Usage:
+#   Add packages to the list below, then run:
+#   darwin-rebuild switch --flake .#evergive
+#
+# Example packages:
+#   neovim          - terminal editor
+#   ripgrep         - fast grep (required for LazyVim)
+#   fd              - fast find (required for LazyVim)
+#   lazygit         - terminal git UI
+#   fzf             - fuzzy finder
+#   nodejs          - required for some LSPs
+#
+# LazyVim setup:
+#   After adding neovim and deps, run:
+#   git clone https://github.com/LazyVim/starter ~/.config/nvim
+#   rm -rf ~/.config/nvim/.git
+#   nvim
+{ pkgs, ... }: {
+  environment.systemPackages = with pkgs; [
+  ];
+}
