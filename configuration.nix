@@ -5,6 +5,11 @@
   lib,
   ...
 }: {
+  # user-shell.nix must exist - copy from user-shell.nix.example
+  imports = [
+    ./user-shell.nix
+  ];
+
   nix = {
     channel.enable = false;
     optimise.automatic = true;
@@ -19,10 +24,12 @@
   nixpkgs.config = {
     allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
-        claude-code
+        "claude-code"
+        "vscode"
       ];
   };
 
+  system.stateVersion = 6;
   time.timeZone = "Europe/London";
 
   users.users.${user.name} = {
