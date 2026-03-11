@@ -1,2 +1,2 @@
 .direnv
-./nix-darwin
+nix-darwin/*
