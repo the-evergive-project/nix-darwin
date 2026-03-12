@@ -2,9 +2,13 @@
 set -o pipefail
 
 destination=nix-darwin
+user_nix_dir=./users.d
 
 # fetch config
-nix flake clone --extra-experimental-features "nix-command flakes" github:the-evergive-project/nix-darwin --dest $destination
+nix flake clone --extra-experimental-features "nix-command flakes" github:the-evergive-project/nix-darwin/amorrison/custom-config --dest $destination
+if [[ ! -z "$user_nix_dir/$USER.nix" ]]; then
+  cp -r $user_nix_dir $destination
+fi
 cd $destination
 
 # fill in user-specific info
@@ -31,7 +35,7 @@ fi
 if [[ ! -f $age_key ]]; then
   echo "generating age key..."
   mkdir -p $HOME/.config/sops/age/
-  nix run --extra-experimental-features "nix-command flakes" nixpkgs#ssh-to-age -- < "$public_key" -o "$age_key"
+  nix-shell -p age --run "age-keygen < $public_key -o $age_key"
   age_pub="$(nix run --extra-experimental-features 'nix-command flakes' nixpkgs#ssh-to-age < "$public_key")"
   echo "share your key with the team: $age_pub"
 else

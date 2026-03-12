@@ -1,0 +1,7 @@
+# Nix daemon initialization
+if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
+
+# Starship
+export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml

@@ -18,21 +18,25 @@
 
   nixpkgs.config = {
     allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [
+      let name = lib.getName pkg; in
+      builtins.elem name [
         "claude-code"
         "vscode"
-      ];
+      ] || lib.hasPrefix "vscode-extension-" name;
   };
 
   time.timeZone = "Europe/London";
   system.stateVersion = 6;
 
   users.users.${user.name} = {
+    name = user.name;
+    home = "/Users/${user.name}";
     description = user.displayName;
   };
 
   # automatically dev shells upon entering the project directory
   programs.direnv.enable = true;
+
   environment.systemPackages = with pkgs; [
     git
     claude-code

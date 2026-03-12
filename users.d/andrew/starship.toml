@@ -1,0 +1,117 @@
+add_newline = true
+format = "$cmd_duration[](fg:c7 bg:c0)[$os ](fg:c0 bg:c7)[$hostname](fg:c0 bg:c7)[](fg:c7 bg:c6)$directory[](fg:c6)$fill$aws$nodejs$dotnet$python$java$c$shell$time[](fg:c6)$line_break$git_branch$line_break$line_break$character"
+palette = "main"
+
+[aws]
+format = "[ $symbol$profile ](fg:#000000 bg:c7)[](fg:c7 bg:#6cc24a)"
+
+[c]
+format = "[ $symbol$version ](fg:#ffffff bg:c4)"
+symbol = " "
+
+[character]
+error_symbol = "[×](bold red)"
+format = "[ $symbol](fg:c4) "
+success_symbol = "[≫](bold green)"
+
+[cmd_duration]
+format = "$line_break[ took $duration ](fg:white italic)\n$line_break$line_break$line_break\n"
+min_time = 200
+show_milliseconds = true
+
+[directory]
+format = "[ 󰷏 $path ](fg:c3 bg:c6 italic)"
+truncation_length = 2
+truncation_symbol = "…/"
+
+[dotnet]
+format = "[ $symbol$tfm ](fg:#ffffff bg:c4)"
+symbol = " .NET "
+
+[fill]
+style = "fg:c5 bg:transparent"
+symbol = "."
+
+[git_branch]
+format = "[ 󰘬 $branch ](fg:#00bb00)"
+
+[hostname]
+disabled = false
+format = "$ssh_symbol$hostname"
+ssh_only = false
+
+[java]
+format = "[ $symbol$version ](fg:#ffffff bg:c4)"
+symbol = " "
+
+[nodejs]
+format = "[ $symbol$version ](fg:#333333 bg:#6cc24a)[](fg:#6cc24a bg:c0)"
+
+[os]
+disabled = false
+format = "$symbol"
+
+[os.symbols]
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = ""
+CentOS = ""
+Debian = ""
+EndeavourOS = ""
+Fedora = ""
+FreeBSD = ""
+Garuda = ""
+Gentoo = ""
+Linux = "🐧"
+Macos = ""
+Manjaro = ""
+Mariner = ""
+Mint = ""
+NetBSD = ""
+NixOS = ""
+OpenBSD = ""
+OpenCloudOS = "☁️"
+OracleLinux = "⊂⊃"
+Pop = ""
+Raspbian = ""
+RedHatEnterprise = ""
+Redhat = ""
+SUSE = ""
+Solus = ""
+Ubuntu = ""
+Unknown = ""
+Windows = ""
+openEuler = ""
+openSUSE = ""
+
+[palettes.main]
+c0 = "#000000"
+c1 = "#004480"
+c2 = "#002240"
+c3 = "#c6e7ff"
+c4 = "#222222"
+c5 = "#808080"
+c6 = "#993333"
+c7 = "#ffbb66"
+c99 = "#ffffff"
+
+[python]
+format = "[ $symbol$version ](fg:#ffffff bg:c4)"
+symbol = " "
+
+[shell]
+disabled = false
+fish_indicator = "fish"
+format = "[  $indicator ](#f15a24 bg:c0)[](bg:c6 fg:c0)"
+powershell_indicator = "powershell"
+unknown_indicator = "shell"
+
+[time]
+disabled = false
+format = "[ $time ](fg:c3 bg:c6)"
+time_format = "󰦖 %H:%M"
+
+[username]
+format = "[  $user ](fg:c0 bg:c7)"
+show_always = false
