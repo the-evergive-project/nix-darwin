@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+
     nix-darwin.url = "github:lnl7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
@@ -23,8 +24,7 @@
       specialArgs = { inherit user nixpkgs home-manager; };
       modules = [
         ./configuration.nix
-        userConfig
-      ];
+      ] ++ nixpkgs.lib.optional (builtins.pathExists userConfig) userConfig;
     };
   };
 }

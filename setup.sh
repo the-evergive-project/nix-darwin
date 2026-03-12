@@ -2,9 +2,13 @@
 set -o pipefail
 
 destination=nix-darwin
+user_nix_dir=./users.d
 
 # fetch config
-nix flake clone --extra-experimental-features "nix-command flakes" github:the-evergive-project/nix-darwin --dest $destination
+nix flake clone --extra-experimental-features "nix-command flakes" github:the-evergive-project/nix-darwin/tkounenis/test-per-user-setup --dest $destination
+if [[ ! -z "$user_nix_dir/$USER.nix" ]]; then
+  cp -r $user_nix_dir $destination
+fi
 cd $destination
 
 # fill in user-specific info
