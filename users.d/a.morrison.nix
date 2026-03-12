@@ -35,7 +35,6 @@ in {
     programs.home-manager.enable = true;
     programs.starship = {
       enable = true;
-      settings = builtins.fromTOML (builtins.readFile (userDir + "/starship.toml"));
     };
     programs.git = {
       enable = true;
