@@ -15,11 +15,25 @@
     home.stateVersion = "23.11";
 
     home.packages = with pkgs; [
+      lazygit
       git
+      fzf
+      fd-find
+      ripgrep
     ];
 
-    programs.home-manager.enable = true;
+    home.activation.lazyVimSetup = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if [ ! -d "$HOME/.config/nvim" ]; then
+        ${pkgs.git}/bin/git clone https://github.com/LazyVim/starter "$HOME/.config/nvim"
+        rm -rf "$HOME/.config/nvim/.git"
+      fi
+    '';
 
+    programs.home-manager.enable = true;
+    programs.starship = {
+      enable = true;
+      settings = builtins.fromTOML (builtins.readFile (userDir + "/starship.toml"));
+    };
     programs.git = {
       enable = true;
     };
