@@ -1,0 +1,107 @@
+# Nix daemon initialization
+if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
+
+# History search with up/down arrows
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+# Bind up and down arrows to history search
+bindkey "^[[A" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
+bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
+
+# Cmd+Backspace to delete from cursor to beginning of line
+bindkey "^U" backward-kill-line
+
+# Additional useful bindings
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+bindkey "^W" backward-kill-word
+
+# Option+Left/Right to move by words, stopping at special chars (macOS)
+autoload -U select-word-style
+select-word-style bash
+bindkey "^[^[[D" backward-word
+bindkey "^[^[[C" forward-word
+bindkey "^[[1;3D" backward-word
+bindkey "^[[1;3C" forward-word
+
+# Undo type/delete
+bindkey "^H" undo
+
+# Enable additional zsh options
+setopt HIST_VERIFY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_FIND_NO_DUPS
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+
+# Custom clear function that preserves multiline prompts
+smart-clear() {
+    printf '\033[2J\033[H'  # Clear screen, move to top
+    zle reset-prompt        # Redraw the prompt
+}
+zle -N smart-clear
+bindkey "^K" smart-clear
+# Additional bindings for Cmd+K in different terminals
+bindkey "^[[3J" smart-clear
+bindkey "^[k" smart-clear
+
+# Starship
+export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
+
+# Add generic bin
+export PATH=$PATH:$HOME/Work/bin
+
+# Pay respects
+eval "$(pay-respects zsh --alias)"
+alias fuck='f'
+
+source $HOME/.config/zsh/plugins/*.zsh
+
+# Bitwarden cli aliases
+function bw-unlock {
+    export BW_SESSION=$(bw unlock --raw)
+}
+function bw-lock {
+    export BW_SESSION=
+}
+
+# Load encrypted secrets from sops as environment variables
+export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
+if command -v sops >/dev/null 2>&1 && [[ -f "$HOME/.config/secrets/shell.yml" ]]; then
+    # Decrypt and export all key-value pairs as environment variables
+    while IFS= read -r line; do
+        # Skip sops metadata lines and empty lines
+        [[ "$line" =~ ^sops: ]] && break
+        [[ -z "$line" ]] && continue
+
+        # Parse key-value pairs (format: KEY: value)
+        if [[ "$line" =~ ^([A-Z_][A-Z0-9_]*):\ (.+)$ ]]; then
+            local key="${match[1]}"
+            local value="${match[2]}"
+            export "$key"="$value"
+        fi
+    done < <(sops -d "$HOME/.config/secrets/shell.yml" 2>/dev/null)
+fi
+
+# `e` - open files with $EDITOR if set, otherwise use the system default
+e() {
+    if [[ -n "${EDITOR-}" ]]; then
+        $EDITOR "$@"
+    else
+        if command -v xdg-open >/dev/null 2>&1; then
+            xdg-open "$@" &
+        else
+            open "$@" &
+        fi
+    fi
+}
