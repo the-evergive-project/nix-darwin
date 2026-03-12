@@ -14,8 +14,8 @@
     system = "aarch64-darwin";
     pkgs = nixpkgs.legacyPackages.${system};
     user = {
-      name = "thanos"; # enter output of `whoami`
-      displayName = "Thanos Kounenis"; # enter your chosen display name
+      name = "{username}"; # enter output of `whoami`
+      displayName = "{display_name}"; # enter your chosen display name
     };
     userConfig = ./users.d + "/${user.name}.nix";
   in {
