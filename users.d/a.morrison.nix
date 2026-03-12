@@ -1,6 +1,7 @@
 { config, pkgs, lib, user, nixpkgs, home-manager, ... }:
-
-{
+let
+  userDir = ./andrew;
+in {
   imports = [
     home-manager.darwinModules.home-manager
   ];
