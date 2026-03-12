@@ -27,7 +27,7 @@ age_key="$HOME/.config/sops/age/keys.txt"
 
 if [[ ! -f $public_key ]]; then
   echo "generating ssh key..."
-  ssh-keygen -t ed25519 -c "$email" -f "$private_key" -n ""
+  ssh-keygen -t ed25519 -C "$email" -f "$private_key" -N ""
 else
   echo "ssh key already exists"
 fi
