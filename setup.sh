@@ -35,7 +35,7 @@ fi
 if [[ ! -f $age_key ]]; then
   echo "generating age key..."
   mkdir -p $HOME/.config/sops/age/
-  nix run --extra-experimental-features "nix-command flakes" nixpkgs#ssh-to-age -- < "$public_key" -o "$age_key"
+  nix-shell -p age --run "age-keygen < $public_key -o $age_key"
   age_pub="$(nix run --extra-experimental-features 'nix-command flakes' nixpkgs#ssh-to-age < "$public_key")"
   echo "share your key with the team: $age_pub"
 else
