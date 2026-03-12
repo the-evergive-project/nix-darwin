@@ -9,6 +9,7 @@ in {
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.extraSpecialArgs = { inherit nixpkgs; };
+  home-manager.backupFileExtension = "backup";
 
   home-manager.users.${user.name} = { config, lib, ... }: {
     home.username = lib.mkForce "a.morrison";
@@ -16,6 +17,7 @@ in {
     home.stateVersion = "23.11";
 
     home.packages = with pkgs; [
+      neovim
       lazygit
       git
       fzf
