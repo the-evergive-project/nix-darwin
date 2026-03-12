@@ -19,7 +19,7 @@ in {
       lazygit
       git
       fzf
-      fd-find
+      fd
       ripgrep
     ];
 
