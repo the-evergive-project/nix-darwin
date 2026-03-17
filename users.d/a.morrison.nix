@@ -23,7 +23,17 @@ in {
       fzf
       fd
       ripgrep
+      starship
     ];
+
+    home.sessionPath = [ "$HOME/.local/bin" ];
+
+    home.activation.installClaudeCode = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if [ ! -f "$HOME/.local/bin/claude" ]; then
+        export PATH="${pkgs.curl}/bin:/usr/bin:$PATH"
+        $DRY_RUN_CMD ${pkgs.curl}/bin/curl -fsSL https://claude.ai/install.sh | bash
+      fi
+    '';
 
     home.activation.lazyVimSetup = lib.hm.dag.entryAfter ["writeBoundary"] ''
       if [ ! -d "$HOME/.config/nvim" ]; then
@@ -42,6 +52,9 @@ in {
 
     programs.zsh = {
       enable = true;
+      initContent = ''
+        export PATH="$HOME/.local/bin:$PATH"
+      '';
     };
   };
 }
