@@ -39,7 +39,7 @@
 
   environment.systemPackages = with pkgs; [
     git
-    claude-code
     vscode
+    coreutils
   ];
 }
