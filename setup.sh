@@ -53,8 +53,7 @@ read "new_email?Enter email (eg. j.doe@evergive.com) [$email]: "
 if [[ -n $new_display_name || -n $new_email ]]; then
   printf "display_name=%q\nemail=%q\n" "$display_name" "$email" >$defaults_file
 fi
-sed -i'' "s/{display_name}/$display_name/g" flake.nix
-sed -i'' "s/{username}/$(whoami)/g" flake.nix
+sed "s/{display_name}/$display_name/g; s/{username}/$(whoami)/g" flake.nix > flake.nix.tmp && mv flake.nix.tmp flake.nix
 
 # setup ssh/age key
 private_key="$HOME/.ssh/id_ed25519"
