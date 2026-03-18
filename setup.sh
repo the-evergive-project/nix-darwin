@@ -1,24 +1,37 @@
 #!/bin/zsh
-set -o pipefail
+set -eo pipefail
 
 destination=nix-darwin
 user_nix_dir=./users.d
+defaults_file="${0:A:h}/.setup_defaults"
 
 # fetch config
-nix flake clone --extra-experimental-features "nix-command flakes" github:the-evergive-project/nix-darwin/tkounenis/test-per-user-setup --dest $destination
+if [[ -d $destination ]]; then
+  read "confirm?Destination '$destination' already exists. Remove and re-clone? [y/N] "
+  if [[ $confirm == [yY] ]]; then
+    rm -rf $destination
+  else
+    echo "Aborting."
+    exit 1
+  fi
+fi
+nix flake clone --extra-experimental-features "nix-command flakes" github:the-evergive-project/nix-darwin --dest $destination
 if [[ ! -z "$user_nix_dir/$USER.nix" ]]; then
   cp -r $user_nix_dir $destination
 fi
 cd $destination
 
 # fill in user-specific info
-read "display_name?Enter display name (eg. John Doe): "
-read "email?Enter email (eg. j.doe@evergive.com): "
+[[ -f $defaults_file ]] && source $defaults_file
+read "new_display_name?Enter display name (eg. John Doe) [$display_name]: "
+read "new_email?Enter email (eg. j.doe@evergive.com) [$email]: "
+[[ -n $new_display_name ]] && display_name=$new_display_name
+[[ -n $new_email ]] && email=$new_email
+if [[ -n $new_display_name || -n $new_email ]]; then
+  printf "display_name=%q\nemail=%q\n" "$display_name" "$email" >$defaults_file
+fi
 sed -i '' "s/{display_name}/$display_name/g" flake.nix
 sed -i '' "s/{username}/$(whoami)/g" flake.nix
-
-set -o pipefail
-read "email?Enter email (eg. j.doe@evergive.com): "
 
 # setup ssh/age key
 private_key="$HOME/.ssh/id_ed25519"
