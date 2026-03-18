@@ -21,6 +21,7 @@
       let name = lib.getName pkg; in
       builtins.elem name [
         "vscode"
+        "claude-code"
       ] || lib.hasPrefix "vscode-extension-" name;
   };
 
@@ -39,6 +40,5 @@
   environment.systemPackages = with pkgs; [
     git
     vscode
-    coreutils
-  ];
+  ]
 }

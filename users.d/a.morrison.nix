@@ -24,15 +24,15 @@ in {
       fd
       ripgrep
       starship
-      coreutils
+      (pkgs.claude-code.overrideAttrs (old: rec {
+        version = "2.1.77";
+        src = pkgs.fetchzip {
+          url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
+          hash = "sha256-3bsFS3EZYbU8htlO7QtA9Qs8xlm0ZPz02bJ3ROZaugY=";
+        };
+        npmDepsHash = lib.fakeHash;
+      }))
     ];
-
-    home.sessionPath = [ "$HOME/.local/bin" ];
-
-    home.activation.installClaudeCode = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      export PATH="${pkgs.curl}/bin:$PATH:/usr/bin"
-      $DRY_RUN_CMD ${pkgs.curl}/bin/curl -fsSL https://claude.ai/install.sh | bash
-    '';
 
     home.activation.lazyVimSetup = lib.hm.dag.entryAfter ["writeBoundary"] ''
       if [ ! -d "$HOME/.config/nvim" ]; then
