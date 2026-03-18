@@ -55,6 +55,9 @@ bindkey "^K" smart-clear
 bindkey "^[[3J" smart-clear
 bindkey "^[k" smart-clear
 
+# This is required by the native claude installation
+export PATH=$HOME/.local/bin:$PATH
+
 # Starship
 export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
 

@@ -33,6 +33,7 @@ in {
       delta
       direnv
       eza
+      firefox
       fzf
       git
       himalaya # terminal mail client
