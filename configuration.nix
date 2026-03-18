@@ -40,5 +40,5 @@
   environment.systemPackages = with pkgs; [
     git
     vscode
-  ]
+  ];
 }
