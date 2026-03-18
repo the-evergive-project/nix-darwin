@@ -39,6 +39,7 @@ in {
       himalaya # terminal mail client
       lazygit
       mtr
+      neovim
       nushell
       pay-respects
       ranger
@@ -89,6 +90,7 @@ in {
     programs.git = {
       enable = true;
       settings = {
+        core.editor = "nvim";
         core.excludesFile = "~/.config/git/ignore";
         core.pager = "delta";
         delta.navigate = true;
