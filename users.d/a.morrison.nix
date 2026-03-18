@@ -30,7 +30,7 @@ in {
     home.sessionPath = [ "$HOME/.local/bin" ];
 
     home.activation.installClaudeCode = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      export PATH="${pkgs.curl}/bin:/usr/bin:$PATH"
+      export PATH="${pkgs.curl}/bin:$PATH:/usr/bin"
       $DRY_RUN_CMD ${pkgs.curl}/bin/curl -fsSL https://claude.ai/install.sh | bash
     '';
 
