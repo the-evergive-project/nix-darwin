@@ -20,7 +20,6 @@
     allowUnfreePredicate = pkg:
       let name = lib.getName pkg; in
       builtins.elem name [
-        "claude-code"
         "vscode"
       ] || lib.hasPrefix "vscode-extension-" name;
   };
