@@ -24,6 +24,7 @@ in {
       fd
       ripgrep
       starship
+      coreutils
     ];
 
     home.sessionPath = [ "$HOME/.local/bin" ];
