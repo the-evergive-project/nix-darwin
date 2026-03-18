@@ -1,6 +1,29 @@
 #!/bin/zsh
 set -eo pipefail
 
+# Check that nix is installed
+if ! command -v nix &>/dev/null; then
+  echo "Error: nix is not installed."
+  echo ""
+  echo "Install it with:"
+  echo "  sh <(curl -L https://nixos.org/nix/install)"
+  echo ""
+  echo "Then restart your shell and re-run this script."
+  exit 1
+fi
+
+# Check that nix-darwin is installed
+if ! command -v darwin-rebuild &>/dev/null; then
+  echo "Error: nix-darwin is not installed."
+  echo ""
+  echo "Install it with:"
+  echo "  nix run nix-darwin -- switch --flake ~/.config/nix-darwin"
+  echo "  (see https://github.com/LnL7/nix-darwin for full instructions)"
+  echo ""
+  echo "Then restart your shell and re-run this script."
+  exit 1
+fi
+
 destination=nix-darwin
 user_nix_dir=./users.d
 defaults_file="${0:A:h}/.setup_defaults"
@@ -30,8 +53,8 @@ read "new_email?Enter email (eg. j.doe@evergive.com) [$email]: "
 if [[ -n $new_display_name || -n $new_email ]]; then
   printf "display_name=%q\nemail=%q\n" "$display_name" "$email" >$defaults_file
 fi
-sed -i '' "s/{display_name}/$display_name/g" flake.nix
-sed -i '' "s/{username}/$(whoami)/g" flake.nix
+sed -i'' "s/{display_name}/$display_name/g" flake.nix
+sed -i'' "s/{username}/$(whoami)/g" flake.nix
 
 # setup ssh/age key
 private_key="$HOME/.ssh/id_ed25519"
