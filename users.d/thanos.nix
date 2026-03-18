@@ -95,6 +95,7 @@ in {
         delta.dark = true;
         interactive.diffFilter = "delta --color-only";
         merge.conflictStyle = "zdiff3";
+        pull.rebase = true;
       };
     };
 
