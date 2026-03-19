@@ -22,6 +22,7 @@ in {
       git
       fzf
       fd
+      gh
       ripgrep
       starship
       (pkgs.claude-code.overrideAttrs (old: rec {
