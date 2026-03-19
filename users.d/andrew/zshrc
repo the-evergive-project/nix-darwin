@@ -5,3 +5,5 @@ fi
 
 # Starship
 export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
+
+alias cld=$HOME/.local/bin/claude
