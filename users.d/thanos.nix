@@ -115,6 +115,7 @@ in {
       };
       sessionVariables = {
         SOPS_AGE_KEY_FILE = "$HOME/.config/sops/age/keys.txt";
+        EDITOR = "nvim";
       };
       initContent = builtins.readFile (userDir + "/zshrc");
       plugins = [
