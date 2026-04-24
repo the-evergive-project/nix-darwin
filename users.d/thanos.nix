@@ -225,12 +225,20 @@ in {
       echo "Done! App wrappers are in ~/Applications/Nix Darwin Apps."
     '';
 
+    # Disable Stats auto-update — it can't update in the read-only nix store
+    # and would otherwise download a DMG to ~/Downloads on every launch.
+    targets.darwin.defaults."eu.exelban.Stats" = {
+      SUEnableAutomaticChecks = false;
+      SUAutomaticallyUpdate = false;
+    };
+
     # LaunchAgents for apps that should start at login
     launchd.agents.stats = {
       enable = true;
       config = {
         Label = "eu.exelban.Stats";
-        ProgramArguments = [ "${config.home.homeDirectory}/Applications/Nix Darwin Apps/Stats.app/Contents/MacOS/Stats" ];
+        # The createAppWrappers activation names the launcher script "launch", not "Stats"
+        ProgramArguments = [ "${config.home.homeDirectory}/Applications/Nix Darwin Apps/Stats.app/Contents/MacOS/launch" ];
         RunAtLoad = true;
         KeepAlive = false;
       };
