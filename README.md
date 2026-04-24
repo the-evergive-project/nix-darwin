@@ -16,6 +16,22 @@ If there is additional configuration you want for your local environment, you ca
 
 **Make sure you commit and push your changes when editing any configuration.**
 
+## Updating flake (versions)
+If you want to update any of the packages, you first need to run a flake update:
+```bash
+$ nix flake update
+```
+
+Then, you need to **push the generated flake.lock**. This is important because every time you run `./setup`, it pulls the repository and respects the content of the lock file.
+```bash
+$ git commit -m 'update lock file' && git push
+```
+
+Then, you can run the setup script again:
+```bash
+$ ./setup.sh
+```
+
 ## Updating configuration
 If you want to update your configuration, you should delete the existing `nix-darwin` folder and run setup again:
 1. Delete the `nix-darwin` folder: `rm -rf ./nix-darwin`
