@@ -33,6 +33,7 @@ in {
       delta
       direnv
       eza
+      fd
       firefox
       fzf
       git
