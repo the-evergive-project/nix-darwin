@@ -158,6 +158,7 @@ in {
     targets.darwin.defaults."eu.exelban.Stats" = {
       SUEnableAutomaticChecks = false;
       SUAutomaticallyUpdate = false;
+      SUScheduledCheckInterval = 0;
     };
 
     # LaunchAgents for apps that should start at login
