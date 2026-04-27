@@ -90,6 +90,7 @@ in {
 
     programs.git = {
       enable = true;
+      signing.format = "openpgp";
       settings = {
         core.editor = "nvim";
         core.excludesFile = "~/.config/git/ignore";
