@@ -5,6 +5,7 @@ let
 in {
   imports = [
     home-manager.darwinModules.home-manager
+    (userDir + "/ghostty.nix")
   ];
 
   home-manager.useGlobalPkgs = true;
