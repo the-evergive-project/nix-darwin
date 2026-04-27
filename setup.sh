@@ -101,4 +101,4 @@ echo "success"
 sudo nix run --extra-experimental-features "nix-command flakes" nix-darwin/master#darwin-rebuild -- switch --flake .#evergive
 
 # Stats launches at activation and may download a DMG update before its prefs are applied
-rm -f "$HOME/Downloads/Stats"*.dmg
+rm -f "$HOME"/Downloads/Stats*.dmg(N) 2>/dev/null || true
