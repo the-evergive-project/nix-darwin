@@ -21,6 +21,9 @@ in
 {
   programs.vscode = {
     enable = true;
+    # vscode is installed system-wide via configuration.nix; this stub prevents
+    # home-manager from adding a duplicate copy to the user profile
+    package = pkgs.runCommand "vscode-noop" { } "mkdir $out";
     profiles = {
       default = {
         extensions = with pkgs.vscode-extensions; [
