@@ -32,7 +32,7 @@ if ! command -v darwin-rebuild &>/dev/null; then
   exit 1
 fi
 
-destination=nix-darwin
+destination=./.dist/nix-darwin
 user_nix_dir=./users.d
 defaults_file="${0:A:h}/.setup_defaults"
 
