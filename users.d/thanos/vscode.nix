@@ -23,7 +23,7 @@ in
     enable = true;
     # vscode is installed system-wide via configuration.nix; this stub prevents
     # home-manager from adding a duplicate copy to the user profile
-    package = pkgs.runCommand "vscode-noop" { } "mkdir $out";
+    package = pkgs.runCommand "vscode-noop" { pname = "vscode"; version = pkgs.vscode.version; } "mkdir -p $out";
     profiles = {
       default = {
         extensions = with pkgs.vscode-extensions; [
