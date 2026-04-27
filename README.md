@@ -38,3 +38,8 @@ If you want to update your configuration, you should delete the existing `nix-da
 1. Make your changes to your user's .nix file
 1. Commit, push and merge your changes
 1. Run setup: `./setup.sh`
+
+If you want to iterate on changes locally without re-cloning from GitHub, use the `--cached` flag. This skips the clone step and uses the existing `./nix-darwin` folder as-is (errors if it does not exist):
+```bash
+$ ./setup.sh --cached
+```

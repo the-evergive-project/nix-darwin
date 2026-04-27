@@ -1,6 +1,14 @@
 #!/bin/zsh
 set -eo pipefail
 
+cached=false
+for arg in "$@"; do
+  case $arg in
+    --cached) cached=true ;;
+    *) echo "Unknown argument: $arg"; exit 1 ;;
+  esac
+done
+
 # Check that nix is installed
 if ! command -v nix &>/dev/null; then
   echo "Error: nix is not installed."
@@ -29,18 +37,28 @@ user_nix_dir=./users.d
 defaults_file="${0:A:h}/.setup_defaults"
 
 # fetch config
-if [[ -d $destination ]]; then
-  read "confirm?Destination '$destination' already exists. Remove and re-clone? [y/N] "
-  if [[ $confirm == [yY] ]]; then
-    rm -rf $destination
-  else
-    echo "Aborting."
+if $cached; then
+  if [[ ! -d $destination ]]; then
+    echo "Error: --cached specified but './$destination' does not exist."
     exit 1
   fi
-fi
-nix flake clone --extra-experimental-features "nix-command flakes" github:the-evergive-project/nix-darwin --dest $destination
-if [[ ! -z "$user_nix_dir/$USER.nix" ]]; then
-  cp -r $user_nix_dir $destination
+  if [[ ! -z "$user_nix_dir/$USER.nix" ]]; then
+    cp -r $user_nix_dir $destination
+  fi
+else
+  if [[ -d $destination ]]; then
+    read "confirm?Destination '$destination' already exists. Remove and re-clone? [y/N] "
+    if [[ $confirm == [yY] ]]; then
+      rm -rf $destination
+    else
+      echo "Aborting."
+      exit 1
+    fi
+  fi
+  nix flake clone --extra-experimental-features "nix-command flakes" github:the-evergive-project/nix-darwin --dest $destination
+  if [[ ! -z "$user_nix_dir/$USER.nix" ]]; then
+    cp -r $user_nix_dir $destination
+  fi
 fi
 cd $destination
 
