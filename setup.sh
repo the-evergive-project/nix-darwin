@@ -44,6 +44,7 @@ if $cached; then
   fi
   if [[ ! -z "$user_nix_dir/$USER.nix" ]]; then
     cp -r $user_nix_dir $destination
+    git -C $destination add users.d/
   fi
 else
   if [[ -d $destination ]]; then
@@ -58,6 +59,7 @@ else
   nix flake clone --extra-experimental-features "nix-command flakes" github:the-evergive-project/nix-darwin --dest $destination
   if [[ ! -z "$user_nix_dir/$USER.nix" ]]; then
     cp -r $user_nix_dir $destination
+    git -C $destination add users.d/
   fi
 fi
 cd $destination
