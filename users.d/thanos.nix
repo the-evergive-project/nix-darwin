@@ -46,6 +46,7 @@ in {
       pay-respects
       ranger
       ripgrep
+      rsync
       sd
       skim
       stats
