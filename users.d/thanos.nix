@@ -16,6 +16,7 @@ in {
   home-manager.users.${user.name} = { config, ... }: {
     imports = [
       (userDir + "/vscode.nix")
+      (userDir + "/nvim.nix")
     ];
 
     home.username = lib.mkForce "thanos";
@@ -41,7 +42,6 @@ in {
       himalaya # terminal mail client
       lazygit
       mtr
-      neovim
       nushell
       pay-respects
       ranger
