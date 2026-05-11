@@ -3,6 +3,9 @@ if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 fi
 
+# Force emacs-style line editing (EDITOR=nvim would otherwise enable vi mode)
+bindkey -e
+
 # History search with up/down arrows
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
@@ -131,3 +134,6 @@ e() {
         fi
     fi
 }
+
+# Ensure emacs mode is active after all plugins have loaded
+bindkey -e
