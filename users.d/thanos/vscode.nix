@@ -4,6 +4,8 @@ let
   # VSCode settings - edit these to change your settings
   vscodeSettings = {
     "update.mode" = "none";
+    "nix.enableLanguageServer" = true;
+    "nix.serverPath" = "nil";
     "chat.customAgentInSubagent.enabled" = true;
     "json.schemaDownload.trustedDomains" = {
       "https://schemastore.azurewebsites.net/" = true;

@@ -58,6 +58,7 @@ in {
       tmux
       tree
       watch
+      nixd # Nix LSP server (for VSCode autocomplete)
       zsh-history-substring-search
     ];
 
