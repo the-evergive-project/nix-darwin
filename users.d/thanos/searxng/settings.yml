@@ -1,0 +1,54 @@
+use_default_settings: true
+
+general:
+  instance_name: "My SearXNG"
+
+search:
+  safe_search: 1
+  autocomplete: "duckduckgo"
+  default_lang: "en"
+
+server:
+  secret_key: "change-me"
+  bind_address: "127.0.0.1"
+  port: 24652
+
+ui:
+  default_theme: simple
+
+engines:
+  - name: google
+    engine: google
+    shortcut: go
+
+  - name: bing
+    engine: bing
+    shortcut: bi
+
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+
+  - name: brave
+    engine: brave
+    shortcut: br
+
+  - name: yahoo
+    engine: yahoo
+    shortcut: yh
+
+  - name: startpage
+    engine: startpage
+    shortcut: sp
+
+  - name: qwant
+    engine: qwant
+    shortcut: qw
+
+  - name: mojeek
+    engine: mojeek
+    shortcut: mj
+
+  - name: wikipedia
+    engine: wikipedia
+    shortcut: wp

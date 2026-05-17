@@ -29,8 +29,7 @@
       nvim-cmp                     # #3 – completion engine
       nvim-web-devicons            # icons used by telescope, lualine, etc.
 
-      # Biome LSP integration
-      nvim-lspconfig
+      # Completion LSP source
       cmp-nvim-lsp
     ];
 
@@ -44,7 +43,7 @@
       vim.opt.termguicolors = true
 
       -- Claude code
-      require("claude-code").setup({
+      require("claudecode").setup({
         -- Terminal window settings
         window = {
           split_ratio = 0.3,      -- Percentage of screen for the terminal window (height for horizontal, width for vertical splits)
@@ -139,14 +138,21 @@
         options = { theme = "auto" },
       }
 
-      -- Biome LSP
-      require("lspconfig").biome.setup {
+      -- Biome LSP (neovim 0.11+ built-in API)
+      vim.lsp.config('biome', {
+        cmd = { 'biome', 'lsp-proxy' },
+        filetypes = {
+          'javascript', 'javascriptreact', 'typescript', 'typescriptreact',
+          'json', 'jsonc', 'css',
+        },
+        root_markers = { 'biome.json', 'biome.jsonc', 'package.json' },
         on_attach = function(_, bufnr)
           vim.keymap.set("n", "<leader>bf", function()
             vim.lsp.buf.format { async = true }
           end, { buffer = bufnr, desc = "Biome format" })
         end,
-      }
+      })
+      vim.lsp.enable('biome')
 
       -- nvim-cmp (with LSP source added)
       local cmp = require("cmp")
