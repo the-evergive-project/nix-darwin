@@ -7,6 +7,8 @@ in {
     home-manager.darwinModules.home-manager
     (userDir + "/caddy.nix")
     (userDir + "/ghostty.nix")
+    (userDir + "/onlyoffice.nix")
+    (userDir + "/zen.nix")
   ];
 
   home-manager.useGlobalPkgs = true;

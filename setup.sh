@@ -42,10 +42,8 @@ if $cached; then
     echo "Error: --cached specified but './$destination' does not exist."
     exit 1
   fi
-  if [[ ! -z "$user_nix_dir/$USER.nix" ]]; then
-    cp -r $user_nix_dir $destination
-    git -C $destination add users.d/
-  fi
+  rsync -a --exclude='/.git' --exclude='/.dist' --exclude='/.setup_defaults' ./ "$destination/"
+  git -C "$destination" add -A
 else
   if [[ -d $destination ]]; then
     read "confirm?Destination '$destination' already exists. Remove and re-clone? [y/N] "
