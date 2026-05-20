@@ -17,6 +17,18 @@ ui:
   default_theme: simple
 
 engines:
+  - name: hister
+    engine: json_engine
+    shortcut: hi
+    url: http://127.0.0.1:4433/search?q={query}
+    results_query: documents
+    url_query: url
+    title_query: title
+    content_query: text
+    categories: [general]
+    weight: 2
+    timeout: 3.0
+
   - name: google
     engine: google
     shortcut: go

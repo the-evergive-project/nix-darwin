@@ -8,9 +8,11 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    hister.url = "github:asciimoo/hister";
+    hister.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager }: let
+  outputs = { self, nixpkgs, nix-darwin, home-manager, hister }: let
     system = "aarch64-darwin";
     pkgs = nixpkgs.legacyPackages.${system};
     user = {
@@ -21,7 +23,7 @@
   in {
     darwinConfigurations.evergive = nix-darwin.lib.darwinSystem {
       inherit system;
-      specialArgs = { inherit user nixpkgs home-manager; };
+      specialArgs = { inherit user nixpkgs home-manager hister; };
       modules = [
         ./configuration.nix
       ] ++ nixpkgs.lib.optional (builtins.pathExists userConfig) userConfig;

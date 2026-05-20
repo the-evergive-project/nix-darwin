@@ -1,12 +1,14 @@
-{ config, pkgs, lib, user, nixpkgs, home-manager, ... }:
+{ config, pkgs, lib, user, nixpkgs, home-manager, hister, ... }:
 
 let
   userDir = ./thanos;
 in {
   imports = [
     home-manager.darwinModules.home-manager
+    hister.darwinModules.hister
     (userDir + "/caddy.nix")
     (userDir + "/ghostty.nix")
+    (userDir + "/hister.nix")
     (userDir + "/onlyoffice.nix")
     (userDir + "/zen.nix")
   ];

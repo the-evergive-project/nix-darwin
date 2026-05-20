@@ -27,6 +27,7 @@
 
   time.timeZone = "Europe/London";
   system.stateVersion = 6;
+  system.primaryUser = user.name;
 
   users.users.${user.name} = {
     name = user.name;

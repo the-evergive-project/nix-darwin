@@ -2,6 +2,28 @@
 
 let
   zenPolicies = pkgs.writeText "zen-policies.json" (builtins.toJSON {
+    policies.ExtensionSettings = {
+      "{f0bda7ce-0cda-42dc-9ea8-126b20fed280}" = {
+        installation_mode = "force_installed";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/hister/latest.xpi";
+      };
+      "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+        installation_mode = "force_installed";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+      };
+      "adguardadblocker@adguard.com" = {
+        installation_mode = "force_installed";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/adguard-adblocker/latest.xpi";
+      };
+      "adguard-vpn@adguard.com" = {
+        installation_mode = "force_installed";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/adguard-vpn/latest.xpi";
+      };
+      "CanvasBlocker@kkapsner.de" = {
+        installation_mode = "force_installed";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/canvasblocker/latest.xpi";
+      };
+    };
     policies.SearchEngines = {
       Default = "SearXNG";
       Add = [
