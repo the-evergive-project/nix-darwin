@@ -25,6 +25,7 @@ in {
       gh
       ripgrep
       starship
+      act
       (pkgs.claude-code.overrideAttrs (old: rec {
         version = "2.1.77";
         src = pkgs.fetchzip {
