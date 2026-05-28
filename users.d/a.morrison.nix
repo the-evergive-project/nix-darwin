@@ -26,14 +26,6 @@ in {
       ripgrep
       starship
       act
-      (pkgs.claude-code.overrideAttrs (old: rec {
-        version = "2.1.77";
-        src = pkgs.fetchzip {
-          url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
-          hash = "sha256-3bsFS3EZYbU8htlO7QtA9Qs8xlm0ZPz02bJ3ROZaugY=";
-        };
-        npmDepsHash = lib.fakeHash;
-      }))
     ];
 
     home.activation.lazyVimSetup = lib.hm.dag.entryAfter ["writeBoundary"] ''
