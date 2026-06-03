@@ -17,7 +17,10 @@ let
     }
   '';
   searxngHosts = pkgs.writeText "searxng-hosts" ''
-    127.0.0.1 searxng.local
+    127.0.0.1 searxng.internal
+  '';
+  histerHosts = pkgs.writeText "hister-hosts" ''
+    127.0.0.1 hister.internal
   '';
   histerHosts = pkgs.writeText "hister-hosts" ''
     127.0.0.1 hister.local

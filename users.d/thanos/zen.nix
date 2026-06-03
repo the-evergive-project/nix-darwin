@@ -29,9 +29,9 @@ let
       Add = [
         {
           Name = "SearXNG";
-          URLTemplate = "https://searxng.local/search?q={searchTerms}";
+          URLTemplate = "https://searxng.internal:3443/search?q={searchTerms}";
           Method = "GET";
-          IconURL = "https://searxng.local/favicon.ico";
+          IconURL = "https://searxng.internal:3443/favicon.ico";
         }
       ];
     };

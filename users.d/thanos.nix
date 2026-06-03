@@ -9,7 +9,9 @@ in {
     (userDir + "/caddy.nix")
     (userDir + "/ghostty.nix")
     (userDir + "/hister.nix")
+    # (userDir + "/krita.nix")
     (userDir + "/onlyoffice.nix")
+    # (userDir + "/rapidraw.nix")
     (userDir + "/zen.nix")
   ];
 
@@ -34,12 +36,12 @@ in {
     home.stateVersion = "23.11";
 
     home.packages = with pkgs; [
-      # The current bitwarden-cli package is broken, use specific version instead
       bitwarden-cli
       bat
       biome
       btop
       claude-code
+      cloc
       ctop
       delta
       direnv
@@ -58,6 +60,7 @@ in {
       rsync
       sd
       skim
+      sops
       stats
       tmux
       tree

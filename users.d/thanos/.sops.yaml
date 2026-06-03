@@ -1,0 +1,8 @@
+keys:
+  # developers
+  - &thanos age1ekaapdts3cyujjjnxuudy4a3mp4qgrxg54xvka0pdht9pc45sckshkmcz5
+
+creation_rules:
+  - path_regex: sops/secrets.env
+    key_groups:
+      - age: [*thanos]

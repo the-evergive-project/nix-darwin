@@ -9,7 +9,7 @@ search:
   default_lang: "en"
 
 server:
-  secret_key: "change-me"
+  secret_key: "$SEARXNG_SECRET_KEY"
   bind_address: "127.0.0.1"
   port: 24652
 
@@ -28,6 +28,10 @@ engines:
     categories: [general]
     weight: 2
     timeout: 3.0
+
+  - name: qwant
+    engine: qwant
+    shortcut: qw
 
   - name: google
     engine: google
