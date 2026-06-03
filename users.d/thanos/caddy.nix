@@ -3,15 +3,15 @@
 let
   caddyfile = pkgs.writeText "Caddyfile" ''
     {
-      admin localhost:2020
+      admin localhost:2018
     }
 
-    searxng.local {
+    searxng.internal:3443 {
       tls internal
       reverse_proxy 127.0.0.1:24652
     }
 
-    hister.local {
+    hister.internal:3443 {
       tls internal
       reverse_proxy 127.0.0.1:4433
     }
@@ -21,9 +21,6 @@ let
   '';
   histerHosts = pkgs.writeText "hister-hosts" ''
     127.0.0.1 hister.internal
-  '';
-  histerHosts = pkgs.writeText "hister-hosts" ''
-    127.0.0.1 hister.local
   '';
 in {
   system.activationScripts.postActivation.text = lib.mkAfter ''
