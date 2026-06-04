@@ -28,11 +28,17 @@ in {
       ${pkgs.hostctl}/bin/hostctl add searxng --from ${searxngHosts}
     ${pkgs.hostctl}/bin/hostctl replace hister --from ${histerHosts} 2>/dev/null || \
       ${pkgs.hostctl}/bin/hostctl add hister --from ${histerHosts}
+    # Remove stale Caddy CA entries so only the current CA ends up trusted
+    security find-certificate -a -c "Caddy" -Z /Library/Keychains/System.keychain 2>/dev/null | \
+      awk '/SHA-1 hash:/{print $NF}' | \
+      while IFS= read -r hash; do
+        security delete-certificate -Z "$hash" /Library/Keychains/System.keychain 2>/dev/null || true
+      done
     for _i in $(seq 1 15); do
-      /usr/bin/curl -sf http://localhost:2020/config/ >/dev/null 2>&1 && break
+      /usr/bin/curl -sf http://localhost:2018/config/ >/dev/null 2>&1 && break
       sleep 1
     done
-    ${pkgs.caddy}/bin/caddy trust 2>/dev/null || true
+    ${pkgs.caddy}/bin/caddy trust --address localhost:2018 2>/dev/null || true
   '';
 
   launchd.daemons.caddy = {

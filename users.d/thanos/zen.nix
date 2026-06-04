@@ -24,6 +24,9 @@ let
         install_url = "https://addons.mozilla.org/firefox/downloads/latest/canvasblocker/latest.xpi";
       };
     };
+    policies.Preferences = {
+      "security.enterprise_roots.enabled" = true;
+    };
     policies.SearchEngines = {
       Default = "SearXNG";
       Add = [
