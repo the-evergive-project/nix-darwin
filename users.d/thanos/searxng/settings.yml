@@ -6,7 +6,10 @@ general:
 search:
   safe_search: 1
   autocomplete: "duckduckgo"
-  default_lang: "en"
+  default_lang: "en-GB"
+  languages:
+    - "en-GB"
+    - "el-GR"
 
 server:
   secret_key: "$SEARXNG_SECRET_KEY"
@@ -32,38 +35,47 @@ engines:
   - name: qwant
     engine: qwant
     shortcut: qw
+    language: en_GB
+    region: en_GB
 
   - name: google
     engine: google
     shortcut: go
+    language: en
+    region: GB
 
   - name: bing
     engine: bing
     shortcut: bi
+    language: en-GB
+    region: en-GB
 
   - name: duckduckgo
     engine: duckduckgo
     shortcut: ddg
+    region: uk-en
 
   - name: brave
     engine: brave
     shortcut: br
+    language: en-GB
+    region: en-GB
 
   - name: yahoo
     engine: yahoo
     shortcut: yh
+    region: GB
 
   - name: startpage
     engine: startpage
     shortcut: sp
-
-  - name: qwant
-    engine: qwant
-    shortcut: qw
+    language: english
+    region: gb
 
   - name: mojeek
     engine: mojeek
     shortcut: mj
+    region: GB
 
   - name: wikipedia
     engine: wikipedia
