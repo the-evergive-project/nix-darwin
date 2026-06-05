@@ -1,13 +1,73 @@
 use_default_settings:
   engines:
     keep_only:
+      # General
       - hister
-      # - qwant   # Suspended: access denied
-      - reddit
-      - google
       - duckduckgo
-      # - mojeek  # Suspended: access denied
       - wikipedia
+      - google
+      - bing
+      # Images
+      - google images
+      - bing images
+      # Videos
+      - youtube
+      - dailymotion
+      - vimeo
+      # News
+      - google news
+      - bing news
+      - wikinews
+      - reuters
+      - duckduckgo_extra
+      - presearch
+      - yep
+      # Map
+      - apple_maps
+      - openstreetmap
+      - photon
+      # Music
+      - soundcloud
+      - bandcamp
+      # IT
+      - stackoverflow
+      - github
+      - gitlab
+      - gitea
+      - sourcehut
+      - hackernews
+      - npm
+      - pypi
+      - crates
+      - hex
+      - metacpan
+      - pkg_go_dev
+      - lib_rs
+      - docker_hub
+      - huggingface
+      - repology
+      - nvd
+      - microsoft_learn
+      - archlinux
+      - alpinelinux
+      - voidlinux
+      - cachy_os
+      - azure
+      # Science
+      - arxiv
+      - semantic scholar
+      - google scholar
+      - pubmed
+      - crossref
+      - openalex
+      - springer
+      - base
+      - core
+      - astrophysics_data_system
+      - pdbe
+      - scanr_structures
+      # Social Media
+      - lemmy
 
 general:
   instance_name: "My SearXNG"
