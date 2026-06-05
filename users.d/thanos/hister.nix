@@ -1,8 +1,6 @@
-{ pkgs, hister, ... }:
+{ ... }:
 
-let
-  histerPkg = hister.packages.${pkgs.system}.hister;
-in {
+{
   services.hister = {
     enable = true;
     port = 4433;
@@ -13,17 +11,4 @@ in {
     ];
   };
 
-  launchd.agents.hister-import-browser = {
-    serviceConfig = {
-      Label = "hister-import-browser";
-      ProgramArguments = [
-        "${histerPkg}/bin/hister" "import-browser" "zen"
-        "/Users/thanos/Library/Application Support/Zen/Profiles/iso6opxm.Default (release)/places.sqlite"
-      ];
-      StartInterval = 60;
-      RunAtLoad = true;
-      StandardOutPath = "/tmp/hister-import-browser.log";
-      StandardErrorPath = "/tmp/hister-import-browser.err";
-    };
-  };
 }

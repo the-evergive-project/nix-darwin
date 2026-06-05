@@ -1,82 +1,68 @@
-use_default_settings: true
+use_default_settings:
+  engines:
+    keep_only:
+      - hister
+      # - qwant   # Suspended: access denied
+      - reddit
+      - google
+      - duckduckgo
+      # - mojeek  # Suspended: access denied
+      - wikipedia
 
 general:
   instance_name: "My SearXNG"
 
 search:
-  safe_search: 1
+  safe_search: 0
   autocomplete: "duckduckgo"
-  default_lang: "en-GB"
+  default_lang: "en"
   languages:
-    - "en-GB"
-    - "el-GR"
+    - en
+    - en-US
 
 server:
   secret_key: "$SEARXNG_SECRET_KEY"
   bind_address: "127.0.0.1"
   port: 24652
+  limiter: false
 
 ui:
   default_theme: simple
+
+plugins:
+  searx.plugins.calculator.SXNGPlugin:
+    active: true
+  searx.plugins.infinite_scroll.SXNGPlugin:
+    active: false
+  searx.plugins.hash_plugin.SXNGPlugin:
+    active: true
+  searx.plugins.self_info.SXNGPlugin:
+    active: true
+  searx.plugins.unit_converter.SXNGPlugin:
+    active: true
+  searx.plugins.ahmia_filter.SXNGPlugin:
+    active: true
+  searx.plugins.hostnames.SXNGPlugin:
+    active: true
+  searx.plugins.time_zone.SXNGPlugin:
+    active: true
+  searx.plugins.oa_doi_rewrite.SXNGPlugin:
+    active: false
+  searx.plugins.tor_check.SXNGPlugin:
+    active: false
+  searx.plugins.tracker_url_remover.SXNGPlugin:
+    active: true
 
 engines:
   - name: hister
     engine: json_engine
     shortcut: hi
-    url: http://127.0.0.1:4433/search?q={query}
+    search_url: http://127.0.0.1:4433/search?q={query}&format=json
     results_query: documents
     url_query: url
     title_query: title
     content_query: text
     categories: [general]
     weight: 2
-    timeout: 3.0
-
-  - name: qwant
-    engine: qwant
-    shortcut: qw
-    language: en_GB
-    region: en_GB
-
-  - name: google
-    engine: google
-    shortcut: go
-    language: en
-    region: GB
-
-  - name: bing
-    engine: bing
-    shortcut: bi
-    language: en-GB
-    region: en-GB
-
-  - name: duckduckgo
-    engine: duckduckgo
-    shortcut: ddg
-    region: uk-en
-
-  - name: brave
-    engine: brave
-    shortcut: br
-    language: en-GB
-    region: en-GB
-
-  - name: yahoo
-    engine: yahoo
-    shortcut: yh
-    region: GB
-
-  - name: startpage
-    engine: startpage
-    shortcut: sp
-    language: english
-    region: gb
-
-  - name: mojeek
-    engine: mojeek
-    shortcut: mj
-    region: GB
-
-  - name: wikipedia
-    engine: wikipedia
-    shortcut: wp
+    timeout: 10.0
+    enable_http: true
