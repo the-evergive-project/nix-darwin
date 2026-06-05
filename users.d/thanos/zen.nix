@@ -1,6 +1,7 @@
 { pkgs, lib, ... }:
 
 let
+  zenVersion = "1.20.2b";
   zenPolicies = pkgs.writeText "zen-policies.json" (builtins.toJSON {
     policies.ExtensionSettings = {
       "{f0bda7ce-0cda-42dc-9ea8-126b20fed280}" = {
@@ -24,8 +25,9 @@ let
         install_url = "https://addons.mozilla.org/firefox/downloads/latest/canvasblocker/latest.xpi";
       };
     };
-    policies.Preferences = {
-      "security.enterprise_roots.enabled" = true;
+    policies.ImportEnterpriseRoots = true;
+    policies.Certificates = {
+      Install = [ "/etc/caddy-ca.crt" ];
     };
     policies.SearchEngines = {
       Default = "SearXNG";
@@ -42,11 +44,11 @@ let
 
   zen = pkgs.stdenv.mkDerivation {
     pname = "zen-browser";
-    version = "1.19.13b";
+    version = zenVersion;
 
     src = pkgs.fetchurl {
-      url = "https://github.com/zen-browser/desktop/releases/download/1.19.13b/zen.macos-universal.dmg";
-      sha256 = "1il7wbv8zm392jg15l9qg8h9ryh5sg0m2zkmw5jk9f9ii26q228i";
+      url = "https://github.com/zen-browser/desktop/releases/download/${zenVersion}/zen.macos-universal.dmg";
+      hash = "sha256-T5YOjY7zU+kaSUM8AEUA+LmRWGHk8Ei6i9KWjgzFE8c=";
     };
 
     nativeBuildInputs = [ pkgs.undmg ];

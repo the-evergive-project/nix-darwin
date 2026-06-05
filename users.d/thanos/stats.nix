@@ -7,6 +7,7 @@
     SUEnableAutomaticChecks = false;
     SUAutomaticallyUpdate = false;
     SUScheduledCheckInterval = 0;
+    "update-interval" = "Notify"; # prevents silent DMG downloads; Stats still notifies but won't download
   };
 
   launchd.agents.stats = {

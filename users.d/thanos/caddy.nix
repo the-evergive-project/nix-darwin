@@ -28,27 +28,30 @@ in {
       ${pkgs.hostctl}/bin/hostctl add searxng --from ${searxngHosts}
     ${pkgs.hostctl}/bin/hostctl replace hister --from ${histerHosts} 2>/dev/null || \
       ${pkgs.hostctl}/bin/hostctl add hister --from ${histerHosts}
-    # Remove stale Caddy CA entries so only the current CA ends up trusted
-    security find-certificate -a -c "Caddy" -Z /Library/Keychains/System.keychain 2>/dev/null | \
-      awk '/SHA-1 hash:/{print $NF}' | \
-      while IFS= read -r hash; do
-        security delete-certificate -Z "$hash" /Library/Keychains/System.keychain 2>/dev/null || true
-      done
-    for _i in $(seq 1 15); do
-      /usr/bin/curl -sf http://localhost:2018/config/ >/dev/null 2>&1 && break
+    # Wait for Caddy to generate its local CA cert (up to 30s)
+    caddy_ca="/var/root/Library/Application Support/Caddy/pki/authorities/local/root.crt"
+    for _i in $(seq 1 30); do
+      [ -f "$caddy_ca" ] && break
       sleep 1
     done
-    ${pkgs.caddy}/bin/caddy trust --address localhost:2018 2>/dev/null || true
+    if [ -f "$caddy_ca" ]; then
+      cp "$caddy_ca" /etc/caddy-ca.crt
+      # Remove stale Caddy CA entries so only the current CA ends up trusted
+      security find-certificate -a -c "Caddy" -Z /Library/Keychains/System.keychain 2>/dev/null | \
+        awk '/SHA-1 hash:/{print $NF}' | \
+        while IFS= read -r hash; do
+          security delete-certificate -Z "$hash" /Library/Keychains/System.keychain 2>/dev/null || true
+        done
+      security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /etc/caddy-ca.crt 2>/dev/null || true
+    fi
   '';
 
   launchd.daemons.caddy = {
     serviceConfig = {
       Label = "caddy";
       ProgramArguments = [
-        "${pkgs.caddy}/bin/caddy"
-        "run"
-        "--config" "${caddyfile}"
-        "--adapter" "caddyfile"
+        "/bin/sh" "-c"
+        "/bin/wait4path /nix/store && exec ${pkgs.caddy}/bin/caddy run --config ${caddyfile} --adapter caddyfile"
       ];
       RunAtLoad = true;
       KeepAlive = true;
