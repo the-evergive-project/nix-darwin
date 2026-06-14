@@ -65,9 +65,12 @@ in {
       tmux
       tree
       watch
+      zed-editor
       nixd # Nix LSP server (for VSCode autocomplete)
       zsh-history-substring-search
     ];
+
+    home.file.".config/ghostty/config".source = userDir + "/ghostty/config";
 
     programs.home-manager.enable = true;
 

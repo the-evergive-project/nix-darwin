@@ -93,7 +93,7 @@
         -- Keymaps
         keymaps = {
           toggle = {
-            normal = "<leader>cc",   -- \ + c + c
+            normal = "<leader>cl",
             terminal = "<C-x>",      -- Ctrl+x (works in terminal mode)
             variants = {
               continue = "<leader>cC",

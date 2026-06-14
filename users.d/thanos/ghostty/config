@@ -1,0 +1,23 @@
+auto-update-channel = stable
+background-blur-radius = 40
+background-opacity = 0.8
+clipboard-paste-bracketed-safe = true
+clipboard-paste-protection = true
+clipboard-trim-trailing-spaces = true
+copy-on-select = clipboard
+font-family = "FiraCode Nerd Font Mono"
+font-size = 14
+macos-icon = custom-style
+macos-icon-screen-color = #00ff00
+macos-icon-ghost-color = #00ffff
+quick-terminal-animation-duration = 0.05
+quick-terminal-screen = mouse
+shell-integration = zsh
+shell-integration-features = cursor,sudo,title
+theme = dark:Catppuccin Frappe,light:Catppuccin Latte
+unfocused-split-opacity = 0.4
+window-save-state = always
+window-vsync = true
+
+config-file="./keybinds"
+keybind = shift+enter=text:\x1b\r

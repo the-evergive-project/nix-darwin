@@ -1,7 +1,8 @@
 { pkgs, lib, ... }:
 
 let
-  zenVersion = "1.20.2b";
+  zenHash = "sha256-XTYtIaaFzz/6WRcFgT753bCRJFTHLC7AcatGJ7rIPVA=";
+  zenVersion = "1.21.1b";
   zenPolicies = pkgs.writeText "zen-policies.json" (builtins.toJSON {
     policies.ExtensionSettings = {
       "{f0bda7ce-0cda-42dc-9ea8-126b20fed280}" = {
@@ -48,7 +49,7 @@ let
 
     src = pkgs.fetchurl {
       url = "https://github.com/zen-browser/desktop/releases/download/${zenVersion}/zen.macos-universal.dmg";
-      hash = "sha256-T5YOjY7zU+kaSUM8AEUA+LmRWGHk8Ei6i9KWjgzFE8c=";
+      hash = zenHash;
     };
 
     nativeBuildInputs = [ pkgs.undmg ];

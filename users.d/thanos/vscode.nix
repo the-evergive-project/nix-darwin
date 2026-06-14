@@ -3,10 +3,9 @@
 let
   # VSCode settings - edit these to change your settings
   vscodeSettings = {
-    "update.mode" = "none";
-    "nix.enableLanguageServer" = true;
-    "nix.serverPath" = "nil";
     "chat.customAgentInSubagent.enabled" = true;
+    "claudeCode.preferredLocation" = "panel";
+    "github.copilot.chat.welcomeMessage" = "never";
     "json.schemaDownload.trustedDomains" = {
       "https://schemastore.azurewebsites.net/" = true;
       "https://raw.githubusercontent.com/" = true;
@@ -15,6 +14,12 @@ let
       "https://json-schema.org/" = true;
       "https://biomejs.dev" = true;
     };
+    "nix.enableLanguageServer" = true;
+    "nix.serverPath" = "nil";
+    "update.mode" = "none";
+    "window.autoDetectColorScheme" = true;
+    "workbench.preferredDarkColorTheme" = "Default Dark Modern";
+    "workbench.preferredLightColorTheme" = "Default Light Modern";
   };
 
   settingsJson = builtins.toJSON vscodeSettings;
