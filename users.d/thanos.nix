@@ -70,7 +70,10 @@ in {
       zsh-history-substring-search
     ];
 
-    home.file.".config/ghostty/config".source = userDir + "/ghostty/config";
+    home.file.".config/ghostty/config" = {
+      source = userDir + "/ghostty/config";
+      force = true;
+    };
 
     programs.home-manager.enable = true;
 
