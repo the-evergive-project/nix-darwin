@@ -12,9 +12,8 @@
     hister.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, hister }: let
+  outputs = { nixpkgs, nix-darwin, home-manager, hister, ... }: let
     system = "aarch64-darwin";
-    pkgs = nixpkgs.legacyPackages.${system};
     user = {
       name = "{username}"; # enter output of `whoami`
       displayName = "{display_name}"; # enter your chosen display name

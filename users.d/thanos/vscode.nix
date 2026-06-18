@@ -3,9 +3,15 @@
 let
   # VSCode settings - edit these to change your settings
   vscodeSettings = {
+    "biome.lsp.bin" = "biome";
     "chat.customAgentInSubagent.enabled" = true;
     "claudeCode.preferredLocation" = "panel";
-    "github.copilot.chat.welcomeMessage" = "never";
+    "editor.defaultFormatter" = "biomejs.biome";
+    "editor.formatOnSave" = true;
+    "editor.codeActionsOnSave" = {
+      "source.fixAll.biome" = "explicit";
+      "source.organizeImports.biome" = "explicit";
+    };
     "json.schemaDownload.trustedDomains" = {
       "https://schemastore.azurewebsites.net/" = true;
       "https://raw.githubusercontent.com/" = true;
@@ -15,11 +21,30 @@ let
       "https://biomejs.dev" = true;
     };
     "nix.enableLanguageServer" = true;
-    "nix.serverPath" = "nil";
+    "nix.serverPath" = "nixd";
+    "nix.serverSettings" = {
+      "nixd" = {
+        "formatting" = {
+          "command" = [ "alejandra" ];
+        };
+        "options" = {
+          "nixos" = {
+            "expr" = "(builtins.getFlake (builtins.toString ./nix)).nixosConfigurations.btcpay.options";
+          };
+        };
+      };
+    };
+    "rewrap.autoWrap.enabled" = true;
     "update.mode" = "none";
     "window.autoDetectColorScheme" = true;
-    "workbench.preferredDarkColorTheme" = "Default Dark Modern";
-    "workbench.preferredLightColorTheme" = "Default Light Modern";
+    "workbench.preferredDarkColorTheme" = "Dark Modern";
+    "workbench.preferredLightColorTheme" = "Light Modern";
+    "[nix]" = {
+      "editor.defaultFormatter" = "jnoortheen.nix-ide";
+    };
+    "[typescriptreact]" = {
+      "editor.defaultFormatter" = "biomejs.biome";
+    };
   };
 
   settingsJson = builtins.toJSON vscodeSettings;

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, user, nixpkgs, home-manager, hister, ... }:
+{ pkgs, lib, user, nixpkgs, home-manager, hister, ... }:
 
 let
   userDir = ./thanos;
@@ -19,7 +19,7 @@ in {
   home-manager.useUserPackages = true;
   home-manager.extraSpecialArgs = { inherit nixpkgs; };
 
-  home-manager.users.${user.name} = { config, ... }: {
+  home-manager.users.${user.name} = { ... }: {
     imports = [
       (userDir + "/direnv.nix")
       (userDir + "/fzf.nix")
