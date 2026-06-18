@@ -77,4 +77,6 @@ in {
     # Disable Home Manager's default ~/Applications/Home Manager Apps symlink
     targets.darwin.linkApps.enable = false;
   };
+
+  system.defaults.NSGlobalDomain.AppleInterfaceStyleSwitchesAutomatically = true;
 }
