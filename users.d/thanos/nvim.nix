@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -15,19 +13,34 @@
 
       # Ripgrep integration (live grep via telescope)
       telescope-nvim
-      plenary-nvim                 # required by telescope
-      telescope-fzf-native-nvim   # native fzf sorter for telescope
+      plenary-nvim # required by telescope
+      telescope-fzf-native-nvim # native fzf sorter for telescope
 
       # FZF integration
-      fzf-lua
+      fzf-vim
+
+      # Skim integration
+      skim-vim
 
       # Top 3 most popular plugins
-      (nvim-treesitter.withPlugins (p: with p; [
-        bash css html javascript json lua markdown nix python toml typescript yaml
-      ]))                          # #1 – syntax highlighting & AST-aware editing
-      lualine-nvim                 # #2 – statusline
-      nvim-cmp                     # #3 – completion engine
-      nvim-web-devicons            # icons used by telescope, lualine, etc.
+      (nvim-treesitter.withPlugins (p:
+        with p; [
+          bash
+          css
+          html
+          javascript
+          json
+          lua
+          markdown
+          nix
+          python
+          toml
+          typescript
+          yaml
+        ])) # #1 – syntax highlighting & AST-aware editing
+      lualine-nvim # #2 – statusline
+      nvim-cmp # #3 – completion engine
+      nvim-web-devicons # icons used by telescope, lualine, etc.
 
       # Completion LSP source
       cmp-nvim-lsp
@@ -51,7 +64,7 @@
           enter_insert = true,    -- Whether to enter insert mode when opening Claude Code
           hide_numbers = true,    -- Hide line numbers in the terminal window
           hide_signcolumn = true, -- Hide the sign column in the terminal window
-          
+
           -- Floating window configuration (only applies when position = "float")
           float = {
             width = "80%",        -- Width: number of columns or percentage string
@@ -125,10 +138,12 @@
       vim.keymap.set("n", "<leader>fb", tb.buffers,      { desc = "Find buffers" })
       vim.keymap.set("n", "<leader>fh", tb.help_tags,    { desc = "Help tags" })
 
-      -- FZF-Lua (standalone fzf UI)
-      require("fzf-lua").setup {}
-      vim.keymap.set("n", "<leader>zf", "<cmd>FzfLua files<cr>",   { desc = "FZF files" })
-      vim.keymap.set("n", "<leader>zg", "<cmd>FzfLua live_grep<cr>", { desc = "FZF grep" })
+      -- fzf.vim (VimScript commands — no Lua setup needed)
+      vim.keymap.set("n", "<leader>zf", "<cmd>Files<cr>",  { desc = "FZF files" })
+      vim.keymap.set("n", "<leader>zg", "<cmd>Rg<cr>",     { desc = "FZF grep (ripgrep)" })
+
+      -- skim.vim (only :SK is available in the nixpkgs package)
+      vim.keymap.set("n", "<leader>sf", "<cmd>SK<cr>", { desc = "Skim files" })
 
       -- Treesitter (0.10+ API — highlight/indent are enabled by default)
       require("nvim-treesitter").setup()

@@ -32,6 +32,7 @@ in {
       (userDir + "/git.nix")
       (userDir + "/nvim.nix")
       (userDir + "/searxng.nix")
+      (userDir + "/skim.nix")
       (userDir + "/stats.nix")
       (userDir + "/vscode.nix")
       (userDir + "/zsh.nix")
@@ -53,6 +54,7 @@ in {
       delta
       direnv
       eza
+      fasd
       fd
       firefox
       fzf
@@ -66,7 +68,7 @@ in {
       ripgrep
       rsync
       sd
-      skim
+      skim # fzf alternative
       sops
       stats
       tmux

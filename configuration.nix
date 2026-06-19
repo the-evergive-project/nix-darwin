@@ -1,7 +1,6 @@
 {
   pkgs,
   user,
-  config,
   lib,
   ...
 }: {
@@ -17,12 +16,14 @@
   };
 
   nixpkgs.config = {
-    allowUnfreePredicate = pkg:
-      let name = lib.getName pkg; in
+    allowUnfreePredicate = pkg: let
+      name = lib.getName pkg;
+    in
       builtins.elem name [
         "claude-code"
         "vscode"
-      ] || lib.hasPrefix "vscode-extension-" name;
+      ]
+      || lib.hasPrefix "vscode-extension-" name;
   };
 
   time.timeZone = "Europe/London";
@@ -35,7 +36,9 @@
     description = user.displayName;
   };
 
-  # automatically dev shells upon entering the project directory
+  security.pam.services.sudo_local.touchIdAuth = true;
+
+  # automatically load dev shells upon entering the project directory
   programs.direnv.enable = true;
 
   environment.systemPackages = with pkgs; [
