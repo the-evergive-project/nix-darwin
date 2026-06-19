@@ -11,3 +11,5 @@ keybind = shift+super+up=goto_split:top
 keybind = shift+super+down=goto_split:bottom
 keybind = shift+super+left=goto_split:left
 keybind = shift+super+right=goto_split:right
+
+keybind = shift+enter=text:\x1b\r
