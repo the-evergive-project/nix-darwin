@@ -1,6 +1,12 @@
-{ pkgs, lib, user, nixpkgs, home-manager, hister, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  user,
+  nixpkgs,
+  home-manager,
+  hister,
+  ...
+}: let
   userDir = ./thanos;
 in {
   imports = [
@@ -17,9 +23,9 @@ in {
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.extraSpecialArgs = { inherit nixpkgs; };
+  home-manager.extraSpecialArgs = {inherit nixpkgs;};
 
-  home-manager.users.${user.name} = { ... }: {
+  home-manager.users.${user.name} = {...}: {
     imports = [
       (userDir + "/direnv.nix")
       (userDir + "/fzf.nix")
@@ -36,6 +42,7 @@ in {
     home.stateVersion = "23.11";
 
     home.packages = with pkgs; [
+      alejandra
       bitwarden-cli
       bat
       biome
@@ -72,6 +79,10 @@ in {
 
     home.file.".config/ghostty/config" = {
       source = userDir + "/ghostty/config";
+      force = true;
+    };
+    home.file.".config/ghostty/keybinds" = {
+      source = userDir + "/ghostty/keybinds";
       force = true;
     };
 

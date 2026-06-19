@@ -1,8 +1,10 @@
-{ pkgs, lib, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   zenHash = "sha256-XTYtIaaFzz/6WRcFgT753bCRJFTHLC7AcatGJ7rIPVA=";
-  zenVersion = "1.21.1b";
+  zenVersion = "1.21.2b";
   zenPolicies = pkgs.writeText "zen-policies.json" (builtins.toJSON {
     policies.ExtensionSettings = {
       "{f0bda7ce-0cda-42dc-9ea8-126b20fed280}" = {
@@ -28,7 +30,7 @@ let
     };
     policies.ImportEnterpriseRoots = true;
     policies.Certificates = {
-      Install = [ "/etc/caddy-ca.crt" ];
+      Install = ["/etc/caddy-ca.crt"];
     };
     policies.SearchEngines = {
       Default = "SearXNG";
@@ -52,7 +54,7 @@ let
       hash = zenHash;
     };
 
-    nativeBuildInputs = [ pkgs.undmg ];
+    nativeBuildInputs = [pkgs.undmg];
     sourceRoot = ".";
 
     installPhase = ''
