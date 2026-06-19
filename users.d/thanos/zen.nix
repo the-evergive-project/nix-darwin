@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  zenHash = "sha256-XTYtIaaFzz/6WRcFgT753bCRJFTHLC7AcatGJ7rIPVA=";
+  zenHash = "sha256-/2dvdOZauMVIuQPWtXIwCJEWU/io+Kf5LewPXR9z2dw=";
   zenVersion = "1.21.3b";
   zenPolicies = pkgs.writeText "zen-policies.json" (builtins.toJSON {
     policies.ExtensionSettings = {
