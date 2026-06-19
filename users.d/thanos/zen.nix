@@ -4,7 +4,7 @@
   ...
 }: let
   zenHash = "sha256-XTYtIaaFzz/6WRcFgT753bCRJFTHLC7AcatGJ7rIPVA=";
-  zenVersion = "1.21.2b";
+  zenVersion = "1.21.3b";
   zenPolicies = pkgs.writeText "zen-policies.json" (builtins.toJSON {
     policies.ExtensionSettings = {
       "{f0bda7ce-0cda-42dc-9ea8-126b20fed280}" = {
