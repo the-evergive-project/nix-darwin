@@ -1,4 +1,16 @@
-{ lib, ... }: {
+{ lib, user, ... }: {
+
+  home-manager.users.${user.name} = { ... }: {
+    home.file.".config/ghostty/config" = {
+      source = ./ghostty/config;
+      force = true;
+    };
+    home.file.".config/ghostty/keybinds" = {
+      source = ./ghostty/keybinds;
+      force = true;
+    };
+  };
+
   system.activationScripts.postActivation.text = lib.mkAfter ''
     {
       set -euo pipefail
@@ -55,6 +67,12 @@
       fi
 
       echo "[$(date)] installGhostty finished"
+
+      lib_config="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+      if [ -f "$lib_config" ]; then
+        echo "Removing Library Ghostty config (managed via XDG)"
+        rm -f "$lib_config"
+      fi
     } >> /tmp/ghostty-install.log 2>&1
   '';
 }

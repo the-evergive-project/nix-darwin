@@ -77,15 +77,6 @@ in {
       zsh-history-substring-search
     ];
 
-    home.file.".config/ghostty/config" = {
-      source = userDir + "/ghostty/config";
-      force = true;
-    };
-    home.file.".config/ghostty/keybinds" = {
-      source = userDir + "/ghostty/keybinds";
-      force = true;
-    };
-
     programs.home-manager.enable = true;
 
     # Disable Home Manager's default ~/Applications/Home Manager Apps symlink
