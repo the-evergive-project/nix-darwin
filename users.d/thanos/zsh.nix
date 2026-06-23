@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -35,14 +33,19 @@
     syntaxHighlighting.enable = true;
   };
 
+  programs.skim = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
-    options = [ "--cmd cd" ];
+    options = ["--cmd cd"];
   };
 
   programs.starship = {
     enable = true;
-    settings = builtins.fromTOML (builtins.readFile ./zsh/starship.toml);
+    settings = fromTOML (builtins.readFile ./zsh/starship.toml);
   };
 }

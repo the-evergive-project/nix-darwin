@@ -1,6 +1,16 @@
-{ pkgs, lib, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  marketplaceExtensions = [
+    "Anthropic.claude-code"
+    "dnut.rewrap-revived"
+    "ms-vscode.vscode-typescript-next"
+    "mtxr.sqltools"
+    "opentofu.vscode-opentofu"
+    "oven.bun-vscode"
+  ];
   # VSCode settings - edit these to change your settings
   vscodeSettings = {
     "biome.lsp.bin" = "biome";
@@ -25,7 +35,7 @@ let
     "nix.serverSettings" = {
       "nixd" = {
         "formatting" = {
-          "command" = [ "alejandra" ];
+          "command" = ["alejandra"];
         };
         "options" = {
           "nixos" = {
@@ -49,30 +59,41 @@ let
 
   settingsJson = builtins.toJSON vscodeSettings;
   settingsPath = "Library/Application Support/Code/User/settings.json";
-in
-{
+in {
   programs.vscode = {
     enable = true;
     # vscode is installed system-wide via configuration.nix; this stub prevents
     # home-manager from adding a duplicate copy to the user profile
-    package = pkgs.runCommand "vscode-noop" { pname = "vscode"; version = pkgs.vscode.version; meta.mainProgram = "code"; } "mkdir -p $out";
+    package = pkgs.runCommand "vscode-noop" {
+      pname = "vscode";
+      version = pkgs.vscode.version;
+      meta.mainProgram = "code";
+    } "mkdir -p $out";
     profiles = {
       default = {
         extensions = with pkgs.vscode-extensions; [
-          # Languages
+          biomejs.biome
+          bradlc.vscode-tailwindcss
           jnoortheen.nix-ide
+          kamadorueda.alejandra
+          matthewpi.caddyfile-support
+          mkhl.direnv
         ];
-
-        # Note: Extensions not available in nixpkgs (claude-code, biome, prisma, etc.)
-        # can be installed manually through VS Code and will persist across
-        # rebuilds
       };
     };
   };
 
+  home.activation.vscodeMarketplaceExtensions = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    if command -v code &>/dev/null; then
+      for ext in ${lib.concatStringsSep " " marketplaceExtensions}; do
+        $DRY_RUN_CMD code --install-extension "$ext" --force 2>/dev/null || true
+      done
+    fi
+  '';
+
   # Copy settings.json instead of symlinking (makes it writable)
   # Settings are overwritten on each darwin-rebuild, but VSCode can modify them between rebuilds
-  home.activation.vscodeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.vscodeSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
     mkdir -p "$HOME/Library/Application Support/Code/User"
     rm -f "$HOME/${settingsPath}"
     cp ${pkgs.writeText "vscode-settings.json" settingsJson} "$HOME/${settingsPath}"
